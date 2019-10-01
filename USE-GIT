@@ -2,6 +2,10 @@ Connect with :
 	$ git config --global user.email "Your@email.com"
 	$ git config --global user.name "Your name"
 
+First, initialise the repository with :
+
+	$ git init
+
 Placed into the folder :
 
 	$ git add yourFile.extension
