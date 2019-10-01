@@ -1,7 +1,5 @@
 How to use Git on Linux
 
-Mon ange je t'aime !!!
-
 Connect with : 
 	$ git config --global user.email "Your@email.com"
 	$ git config --global user.name "Your name"
