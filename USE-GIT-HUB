@@ -1,9 +1,28 @@
+In you're programe file :
 
-:i
---help
+	$ git remote add origin https://github.com/oOMatsuOo/Monopoly.git
 
-yt
-:i
+Send modifications to Git-Hub :
 
+	$ git push origin master
 
-:i
+Synchronize with Git-Hub :
+
+	$ git pull origin master
+
+If you want to check the branch :
+
+	$ git branch
+
+and if you want to create a new one :
+
+	$ git branch newbranch
+
+If you want to go to another branch :
+
+	$ git checkout newbranch
+
+If you want to fuse 2 branch ( from B to A) :
+
+	$ git checkout branchA
+	$ git merge branchB
