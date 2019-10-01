@@ -1,1 +1,0 @@
-Case_depart = "Départ"
