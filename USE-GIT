@@ -1,0 +1,36 @@
+Connect with : 
+	$ git config --global user.email "Your@email.com"
+	$ git config --global user.name "Your name"
+
+Placed into the folder :
+
+	$ git add yourFile.extension
+	$ git commit -m "What you've done now"
+
+If the file had already been added :
+
+	$ git commit -a -m "What you've done now"
+
+If you want to read all the commit made :
+
+	$ git log
+
+If you want to chech an old commit :
+
+	$ git checkout SHAcommit 
+
+	SHA = commit's id
+
+	and then :
+	
+	$ git checkout master
+
+	to come back
+
+If you want to edit you last commit :
+
+	$ git commit --amend -m "You're message"
+
+If you want to erase all the change you've done that you didn't commit already :
+
+	$ git reset --hard
