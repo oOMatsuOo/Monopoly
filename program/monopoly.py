@@ -1,5 +1,6 @@
 from cases import *
 from card import *
 
-print(case_depart)
-print(chance())
+des = [1,2,3,4,5,6]
+
+print(rdm.choice(des)+rdm.choice(des))
