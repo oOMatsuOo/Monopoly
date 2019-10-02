@@ -1,7 +1,7 @@
-#case type : [Emplacement, Type, Couleur, Loyer de base, Propriétaire]
+r#case type : [Emplacement, Type, Couleur, Loyer de base, Propriétaire]
 
 # si case rue -> couleur , si case Bonus/Malus -> Bonus
-# pour les cartes sans propiétaires -> Jeux
+# pour les cartes sans propriétaires -> Jeux
 
 Bonus = "Bonus"
 Bonus_Malus = "Bonus ou Malus"
