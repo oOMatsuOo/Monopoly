@@ -1,6 +1,6 @@
 #case type : [Emplacement, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
 
-# si case rue -> couleur , si case Bonus/Malus -> Bonus
+# si case rue -> couleur , si case bonus/Malus -> bonus
 # pour les cartes sans propriétaires -> Jeux
 
 BRUN       = (165, 42, 42)
@@ -14,13 +14,15 @@ BLEU_FONCE = (  0,  0,139)
 
 
 
-Bonus = "Bonus"
-Bonus_Malus = "Bonus ou Malus"
-Jeux = "Jeux"
+bonus = "Bonus"
+bonus_malus = "Bonus ou Malus"
+jeux = "Jeux"
+batiment = "Batiment"
+banquier = "Banquier"
 
 #Cases spéciales 
 
-case_depart = [0, Bonus_Malus, Bonus, 20, Jeux]
+case_depart = [0, bonus_malus, bonus, 20, jeux]
 
 #Cases brunes
 
