@@ -1,4 +1,4 @@
-#case type : [Emplacement, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
+#case type : [Emplacement, Nom, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
 
 # si case rue -> couleur , si case bonus/Malus -> bonus
 # pour les cartes sans propriétaires -> Jeux
@@ -13,28 +13,30 @@ VERT       = (  0,128,  0)
 BLEU_FONCE = (  0,  0,139)
 
 
-bonus_malus = "Bonus ou Malus"
-bonus = "Bonus"
-malus = "Malus"
-jeux = "Jeux"
-batiment = "Batiment"
-banquier = "Banquier"
-transport = "Transport"
-intercom = "Intercom"
+bonus_malus  = "Bonus ou Malus"
+bonus        = "Bonus"
+malus        = "Malus"
+jeux         = "Jeux"
+batiment     = "Batiment"
+banquier     = "Banquier"
+transport    = "Transport"
+intercom     = "Intercom"
+prison       = "Prison"
+aller_prison = "Aller en Prison"
 
-nombre_case = 36
+nombre_case = 39
 
 #Cases spéciales 
 
-case_depart = [0, bonus_malus, bonus, 20, jeux]
-case_chance_1 = [2, bonus_malus, bonus, 0, jeux]
-case_taxe_inverse = [4, bonus_malus, bonus, 5, jeux]
-case_chance_2 = [7, bonus_malus, bonus, 0, jeux]
-case_chance_3 = [17, bonus_malus, bonus, 0, jeux]
-case_chance_4 = [22, bonus_malus, bonus, 0, jeux]
-case_chance_5 = [33, bonus_malus, bonus, 0, jeux]
-case_chance_6 = [36, bonus_malus, bonus, 0, jeux]
-case_taxe_luxe = [34, bonus_malus, malus, 30, jeux]
+case_depart       = [ 0, bonus_malus, bonus, 20, jeux]
+case_chance_1     = [ 2, bonus_malus, bonus,  0, jeux]
+case_taxe_inverse = [ 4, bonus_malus, bonus,  5, jeux]
+case_chance_2     = [ 7, bonus_malus, bonus,  0, jeux]
+case_chance_3     = [17, bonus_malus, bonus,  0, jeux]
+case_chance_4     = [22, bonus_malus, bonus,  0, jeux]
+case_chance_5     = [33, bonus_malus, bonus,  0, jeux]
+case_chance_6     = [36, bonus_malus, bonus,  0, jeux]
+case_taxe_luxe    = [34, bonus_malus, malus, 30, jeux]
 
 #Cases brunes
 
@@ -84,7 +86,7 @@ case_bleue_2 = [39, batiment, JAUNE, 55, 45, banquier]
 
 #Cases transport
 
-case_transport_1 = [5, batiment, transport, 20, banquier]
+case_transport_1 = [ 5, batiment, transport, 20, banquier]
 case_transport_2 = [15, batiment, transport, 20, banquier]
 case_transport_3 = [25, batiment, transport, 20, banquier]
 case_transport_4 = [35, batiment, transport, 20, banquier]
