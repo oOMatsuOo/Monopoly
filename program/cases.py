@@ -13,16 +13,25 @@ VERT       = (  0,128,  0)
 BLEU_FONCE = (  0,  0,139)
 
 
-
-bonus = "Bonus"
 bonus_malus = "Bonus ou Malus"
+bonus = "Bonus"
+malus = "Malus"
 jeux = "Jeux"
 batiment = "Batiment"
 banquier = "Banquier"
 
+nombre_case = 36
+
 #Cases spéciales 
 
 case_depart = [0, bonus_malus, bonus, 20, jeux]
+case_chance_1 = [2, bonus_malus, bonus, 0, jeux]
+case_chance_2 = [7, bonus_malus, bonus, 0, jeux]
+case_chance_3 = [17, bonus_malus, bonus, 0, jeux]
+case_chance_4 = [22, bonus_malus, bonus, 0, jeux]
+case_chance_5 = [33, bonus_malus, bonus, 0, jeux]
+case_chance_6 = [36, bonus_malus, bonus, 0, jeux]
+case_taxe_luxe = [34, bonus_malus, malus, 30, jeux]
 
 #Cases brunes
 
@@ -31,9 +40,9 @@ case_brune_2 = [3, batiment, BRUN, 5, 3, banquier]
 
 #Cases bleues
 
-case_bleue_1 = [6, batiment, BLEU, 8, 4, banquier]
-case_bleue_2 = [8, batiment, BLEU, 8, 4, banquier]
-case_bleue_3 = [9, batiment, BLEU, 9, 5, banquier]
+case_bleue_1 = [6, batiment, BLEU_CLAIR, 8, 4, banquier]
+case_bleue_2 = [8, batiment, BLEU_CLAIR, 8, 4, banquier]
+case_bleue_3 = [9, batiment, BLEU_CLAIR, 9, 5, banquier]
 
 #Cases mauves
 
@@ -63,4 +72,9 @@ case_jaune_3 = [25, batiment, JAUNE, 35, 29, banquier]
 
 case_verte_1 = [27, batiment, JAUNE, 40, 35, banquier]
 case_verte_1 = [28, batiment, JAUNE, 40, 35, banquier]
-case_verte_1 = [30, batiment, JAUNE, 40, 35, banquier]
+case_verte_1 = [30, batiment, JAUNE, 45, 37, banquier]
+
+#Cases bleues
+
+case_bleue_1 = [33, batiment, JAUNE, 50, 40, banquier]
+case_bleue_2 = [35, batiment, JAUNE, 55, 45, banquier]
