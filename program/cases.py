@@ -19,6 +19,8 @@ malus = "Malus"
 jeux = "Jeux"
 batiment = "Batiment"
 banquier = "Banquier"
+transport = "Transport"
+intercom = "Intercom"
 
 nombre_case = 36
 
