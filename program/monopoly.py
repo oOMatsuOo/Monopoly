@@ -6,6 +6,8 @@ des = [1,2,3,4,5,6]
 
 position = 0
 reponse = "oui"
+jeux = True
+quittter = False
 
 def lancer_des():
 
@@ -38,29 +40,26 @@ def deplacement(deplacement):
 
     return(position)
 
-##
+## Jeux
 
-reponse = input("Voulez-vous jouer ?\n")
+while( not quitter ):
 
-if (reponse == "oui"):
+    reponse_menu = input("Voulez-vous jouer ?\n")
 
-    double, total, premier_de, deuxieme_de = (lancer_des())
-    deplacement(total)
-    print("Votre nouvelle position : ")
-    print(position)
-    
-    while (reponse == "oui"):
-
-        reponse = input("Voulez-vous continuer ?\n")
-
-        if(reponse == "oui"):
-            double, total, premier_de, deuxieme_de = (lancer_des())
-            deplacement(total)
-            print("Votre nouvelle position : ")
-            print(position)
-        else:
-            print("Au revoir.")
-else:
-    print("Au revoir.")
-
-
+    if(reponse_menu == "oui"):
+        while(jeux):
+            reponse = input("Voulez-vous lancer les dés ?\n")
+            if(reponse == "oui"):
+                double, total, premier_de, deuxieme_de = (lancer_des())
+                deplacement(total)
+                print("Votre nouvelle position : ")
+                print(position)
+            elif(reponse == "non"):
+                print("Au revoir.")
+                jeux = False
+            else:
+                print("Je n'ai pas compris votre réponse.\n")
+    elif(reponse_menu == "non"):
+        quitter = False
+    else :
+        print("Je n'ai pas compris votre réponse.\n")
