@@ -19,20 +19,22 @@ malus = "Malus"
 jeux = "Jeux"
 batiment = "Batiment"
 banquier = "Banquier"
+transport = "Transport"
+intercom = "Intercom"
 
 nombre_case = 39
 
 #Cases spéciales 
 
-case_depart = [0, bonus_malus, bonus, 20, jeux]
-case_chance_1 = [2, bonus_malus, bonus, 0, jeux]
-case_taxe_inverse = [4, bonus_malus, bonus, 5, jeux]
-case_chance_2 = [7, bonus_malus, bonus, 0, jeux]
-case_chance_3 = [17, bonus_malus, bonus, 0, jeux]
-case_chance_4 = [22, bonus_malus, bonus, 0, jeux]
-case_chance_5 = [33, bonus_malus, bonus, 0, jeux]
-case_chance_6 = [36, bonus_malus, bonus, 0, jeux]
-case_taxe_luxe = [34, bonus_malus, malus, 30, jeux]
+case_depart       = [ 0, bonus_malus, bonus, 20, jeux]
+case_chance_1     = [ 2, bonus_malus, bonus,  0, jeux]
+case_taxe_inverse = [ 4, bonus_malus, bonus,  5, jeux]
+case_chance_2     = [ 7, bonus_malus, bonus,  0, jeux]
+case_chance_3     = [17, bonus_malus, bonus,  0, jeux]
+case_chance_4     = [22, bonus_malus, bonus,  0, jeux]
+case_chance_5     = [33, bonus_malus, bonus,  0, jeux]
+case_chance_6     = [36, bonus_malus, bonus,  0, jeux]
+case_taxe_luxe    = [34, bonus_malus, malus, 30, jeux]
 
 #Cases brunes
 
@@ -82,7 +84,7 @@ case_bleue_2 = [39, batiment, JAUNE, 55, 45, banquier]
 
 #Cases transport
 
-case_transport_1 = [5, batiment, transport, 20, banquier]
+case_transport_1 = [ 5, batiment, transport, 20, banquier]
 case_transport_2 = [15, batiment, transport, 20, banquier]
 case_transport_3 = [25, batiment, transport, 20, banquier]
 case_transport_4 = [35, batiment, transport, 20, banquier]
