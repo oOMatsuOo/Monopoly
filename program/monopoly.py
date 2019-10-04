@@ -7,10 +7,13 @@ des = [1,2,3,4,5,6]
 position = 0
 reponse = "oui"
 jeux = True
-quittter = False
+quitter = False 
+
+if __name__ == '__main__':
+    main()
 
 def lancer_des():
-
+    
     double = False
 
     premier_de = rdm.choice(des)
@@ -40,26 +43,49 @@ def deplacement(deplacement):
 
     return(position)
 
+def calcul_case(position_deplacement):
+
+    #nom_case, type_case, couleur, cout_achat, loyer, proprietaire = "case_" + str(position_deplacement)
+
+    case_actuelle = list("case_" + str(position_deplacement))
+    print(case_actuelle)
+
 ## Jeux
 
 while( not quitter ):
 
-    reponse_menu = input("Voulez-vous jouer ?\n")
+    reponse_menu = input("Voulez-vous jouer ?\n")   # -> Menu, option : Jeux
 
     if(reponse_menu == "oui"):
+
+        jeux = True #Initialitation des variables , pour commencer à jouer
+        position = 0
+
         while(jeux):
-            reponse = input("Voulez-vous lancer les dés ?\n")
+
+            reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
+
             if(reponse == "oui"):
+
                 double, total, premier_de, deuxieme_de = (lancer_des())
                 deplacement(total)
                 print("Votre nouvelle position : ")
                 print(position)
+                calcul_case(position)
+
             elif(reponse == "non"):
+
                 print("Au revoir.")
                 jeux = False
+
             else:
                 print("Je n'ai pas compris votre réponse.\n")
+
     elif(reponse_menu == "non"):
-        quitter = False
+        print("Au revoir.")
+        quitter = True
+
     else :
         print("Je n'ai pas compris votre réponse.\n")
+
+db.close()

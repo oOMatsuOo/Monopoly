@@ -1,7 +1,10 @@
-#case type : [Emplacement, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
+#case type : Position = ["Nom, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
 
 # si case rue -> couleur , si case bonus/Malus -> bonus
 # pour les cartes sans propriétaires -> Jeux
+
+import sqlite3
+from sqlite3 import Error
 
 BRUN       = (165, 42, 42)
 BLEU_CLAIR = (  0,191,255)
@@ -23,74 +26,155 @@ transport = "Transport"
 intercom = "Intercom"
 
 nombre_case = 39
+ 
+def main():
+    try:
+        conn = sqlite3.connect('cases.db')
+        cursor = conn.cursor()
+        cursor.execute( """ CREATE TABLE IF NOT EXISTS cases (
+                                        id integer PRIMARY KEY,
+                                        name text NOT NULL,
+                                        type text NOT NULL,
+                                        color text NOT NULL,
+                                        cost integer,
+                                        rent integer,
+                                        owner text NOT NULL
+                                    ); """)
+        conn.commit()
+    except sqlite3.OperationalError:
+        print('Erreur la table existe déjà')
+    except Exception as e:
+        print("Erreur")
+        conn.rollback()
+    finally:
+        conn.close
+
+def db_donnees():
+
+    conn = sqlite3.connect("cases.db")
+    c = conn.cursor()
+
+    cases = []
+    cases_append((0, "case_depart", bonus_malus, bonus, 20, jeux))
+    cases_append((2, "case_chance_1", bonus_malus, bonus,  0, jeux))
+    cases_append((4, "case_taxe_inverse", bonus_malus, bonus,  5, jeux))
+    cases_append((7, "case_chance_2", bonus_malus, bonus,  0, jeux))
+    cases_append((17, "case_chance_3", bonus_malus, bonus,  0, jeux))
+    cases_append((22, "case_chance_4", bonus_malus, bonus,  0, jeux))
+    cases_append((33, "case_chance_5", bonus_malus, bonus,  0, jeux))
+    cases_append((36, "case_chance_6", bonus_malus, bonus,  0, jeux))
+    cases_append((34, "case_taxe_luxe",    bonus_malus, malus, 30, jeux))
+
+    cases_append((1, "case_brune_1", batiment, BRUN, 5, 2, banquier))
+    cases_append((3, "case_brune_2", batiment, BRUN, 5, 3, banquier))
+
+    cases_append((6, "case_bleue_1", batiment, BLEU_CLAIR, 8, 4, banquier))
+    cases_append((8, "case_bleue_2", batiment, BLEU_CLAIR, 8, 4, banquier))
+    cases_append((9, "case_bleue_3", batiment, BLEU_CLAIR, 9, 5, banquier))
+
+    cases_append((11, "case_mauve_1", batiment, MAUVE, 12, 7, banquier))
+    cases_append((13, "case_mauve_2", batiment, MAUVE, 12, 7, banquier)) 
+    cases_append((14, "case_mauve_3", batiment, MAUVE, 13, 8, banquier))
+
+    cases_append((16, "case_orange_1", batiment, ORANGE, 17, 12, banquier))
+    cases_append((18, "case_orange_2", batiment, ORANGE, 17, 12, banquier))
+    cases_append((19, "case_orange_3", batiment, ORANGE, 19, 14, banquier))
+
+    cases_append((21, "case_rouge_1", batiment, ROUGE, 23, 18, banquier))
+    cases_append((23, "case_rouge_2", batiment, ROUGE, 23, 18, banquier))
+    cases_append((24, "case_rouge_3", batiment, ROUGE, 26, 20, banquier))
+
+    cases_append((26, "case_jaune_1", batiment, JAUNE, 30, 24, banquier))
+    cases_append((27, "case_jaune_2", batiment, JAUNE, 30, 24, banquier))
+    cases_append((29, "case_jaune_3", batiment, JAUNE, 35, 29, banquier))
+
+    cases_append((31, "case_verte_1", batiment, JAUNE, 40, 35, banquier))
+    cases_append((32, "case_verte_2", batiment, JAUNE, 40, 35, banquier))
+    cases_append((34, "case_verte_3", batiment, JAUNE, 45, 37, banquier))
+
+    cases_append((36, "case_bleue_1", batiment, JAUNE, 50, 40, banquier))
+    cases_append((39, "case_bleue_2", batiment, JAUNE, 55, 45, banquier))
+
+    cases_append((5, "case_transport_1", batiment, transport, 20, banquier))
+    cases_append((15, "case_transport_2", batiment, transport, 20, banquier))
+    cases_append((25, "case_transport_3", batiment, transport, 20, banquier))
+    cases_append((35, "case_transport_4", batiment, transport, 20, banquier))
+
+    cases_append((12, "case_intercom_1", batiment, intercom, 25, banquier))
+    cases_append((28, "case_intercom_2", batiment, intercom, 25, banquier))
+
+    c.executemany(""" 
+            INSERT INTO users(id, name, type, color, cost, rent, owner)
+            VALUES (?, ?, ?, ?, ?, ?)""",cases)
+
+
 
 #Cases spéciales 
 
-case_depart       = [ 0, bonus_malus, bonus, 20, jeux]
-case_chance_1     = [ 2, bonus_malus, bonus,  0, jeux]
-case_taxe_inverse = [ 4, bonus_malus, bonus,  5, jeux]
-case_chance_2     = [ 7, bonus_malus, bonus,  0, jeux]
-case_chance_3     = [17, bonus_malus, bonus,  0, jeux]
-case_chance_4     = [22, bonus_malus, bonus,  0, jeux]
-case_chance_5     = [33, bonus_malus, bonus,  0, jeux]
-case_chance_6     = [36, bonus_malus, bonus,  0, jeux]
-case_taxe_luxe    = [34, bonus_malus, malus, 30, jeux]
+case_0  = ["case_depart",       bonus_malus, bonus, 20, jeux]
+case_2  = ["case_chance_1",     bonus_malus, bonus,  0, jeux]
+case_4  = ["case_taxe_inverse", bonus_malus, bonus,  5, jeux]
+case_7  = ["case_chance_2",     bonus_malus, bonus,  0, jeux]
+case_17 = ["case_chance_3",     bonus_malus, bonus,  0, jeux]
+case_22 = ["case_chance_4",     bonus_malus, bonus,  0, jeux]
+case_33 = ["case_chance_5",     bonus_malus, bonus,  0, jeux]
+case_36 = ["case_chance_6",     bonus_malus, bonus,  0, jeux]
+case_34 = ["case_taxe_luxe",    bonus_malus, malus, 30, jeux]
 
 #Cases brunes
 
-case_brune_1 = [1, batiment, BRUN, 5, 2, banquier]
-case_brune_2 = [3, batiment, BRUN, 5, 3, banquier]
+case_1 = ["case_brune_1", batiment, BRUN, 5, 2, banquier]
+case_3 = ["case_brune_2", batiment, BRUN, 5, 3, banquier]
 
 #Cases bleues
 
-case_bleue_1 = [6, batiment, BLEU_CLAIR, 8, 4, banquier]
-case_bleue_2 = [8, batiment, BLEU_CLAIR, 8, 4, banquier]
-case_bleue_3 = [9, batiment, BLEU_CLAIR, 9, 5, banquier]
+case_6 = ["case_bleue_1", batiment, BLEU_CLAIR, 8, 4, banquier]
+case_8 = ["case_bleue_2", batiment, BLEU_CLAIR, 8, 4, banquier]
+case_9 = ["case_bleue_3", batiment, BLEU_CLAIR, 9, 5, banquier]
 
 #Cases mauves
 
-case_mauve_1 = [11, batiment, MAUVE, 12, 7, banquier]
-case_mauve_2 = [13, batiment, MAUVE, 12, 7, banquier]
-case_mauve_3 = [14, batiment, MAUVE, 13, 8, banquier]
+case_11 = ["case_mauve_1", batiment, MAUVE, 12, 7, banquier]
+case_13 = ["case_mauve_2", batiment, MAUVE, 12, 7, banquier]
+case_14 = ["case_mauve_3", batiment, MAUVE, 13, 8, banquier]
 
 #Cases oranges
 
-case_orange_1 = [16, batiment, ORANGE, 17, 12, banquier]
-case_orange_2 = [18, batiment, ORANGE, 17, 12, banquier]
-case_orange_3 = [19, batiment, ORANGE, 19, 14, banquier]
+case_16 = ["case_orange_1", batiment, ORANGE, 17, 12, banquier]
+case_18 = ["case_orange_2", batiment, ORANGE, 17, 12, banquier]
+case_19 = ["case_orange_3", batiment, ORANGE, 19, 14, banquier]
 
 #Cases rouges
 
-case_rouge_1 = [21, batiment, ROUGE, 23, 18, banquier]
-case_rouge_2 = [23, batiment, ROUGE, 23, 18, banquier]
-case_rouge_3 = [24, batiment, ROUGE, 26, 20, banquier]
+case_21 = ["case_rouge_1", batiment, ROUGE, 23, 18, banquier]
+case_23 = ["case_rouge_2", batiment, ROUGE, 23, 18, banquier]
+case_24 = ["case_rouge_3", batiment, ROUGE, 26, 20, banquier]
 
 #Cases jaunes
 
-case_jaune_1 = [26, batiment, JAUNE, 30, 24, banquier]
-case_jaune_2 = [27, batiment, JAUNE, 30, 24, banquier]
-case_jaune_3 = [29, batiment, JAUNE, 35, 29, banquier]
+case_26 = ["case_jaune_1", batiment, JAUNE, 30, 24, banquier]
+case_27 = ["case_jaune_2", batiment, JAUNE, 30, 24, banquier]
+case_29 = ["case_jaune_3", batiment, JAUNE, 35, 29, banquier]
 
 #Cases vertes
 
-case_verte_1 = [31, batiment, JAUNE, 40, 35, banquier]
-case_verte_2 = [32, batiment, JAUNE, 40, 35, banquier]
-case_verte_3 = [34, batiment, JAUNE, 45, 37, banquier]
+case_31 = ["case_verte_1", batiment, JAUNE, 40, 35, banquier]
+case_32 = ["case_verte_2", batiment, JAUNE, 40, 35, banquier]
+case_34 = ["case_verte_3", batiment, JAUNE, 45, 37, banquier]
 
 #Cases bleues
 
-case_bleue_1 = [36, batiment, JAUNE, 50, 40, banquier]
-case_bleue_2 = [39, batiment, JAUNE, 55, 45, banquier]
+case_36 = ["case_bleue_1", batiment, JAUNE, 50, 40, banquier]
+case_39 = ["case_bleue_2", batiment, JAUNE, 55, 45, banquier]
 
 #Cases transport
 
-case_transport_1 = [ 5, batiment, transport, 20, banquier]
-case_transport_2 = [15, batiment, transport, 20, banquier]
-case_transport_3 = [25, batiment, transport, 20, banquier]
-case_transport_4 = [35, batiment, transport, 20, banquier]
+case_5  = ["case_transport_1", batiment, transport, 20, banquier]
+case_15 = ["case_transport_2", batiment, transport, 20, banquier]
+case_25 = ["case_transport_3", batiment, transport, 20, banquier]
+case_35 = ["case_transport_4", batiment, transport, 20, banquier]
 
 #Cases inter-communales
 
-case_intercom_1 = [12, batiment, intercom, 25, banquier]
-case_intercom_2 = [28, batiment, intercom, 25, banquier]
-
+case_12 = ["case_intercom_1", batiment, intercom, 25, banquier]
+case_28 = ["case_intercom_2", batiment, intercom, 25, banquier]
