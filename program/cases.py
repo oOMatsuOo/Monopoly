@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 #case type : [Emplacement, Type, Couleur, Cout d'achat, Loyer de base / revenus, Propriétaire]
 
 # si case rue -> couleur , si case bonus/Malus -> bonus
@@ -22,7 +20,7 @@ jeux = "Jeux"
 batiment = "Batiment"
 banquier = "Banquier"
 
-nombre_case = 36
+nombre_case = 39
 
 #Cases spéciales 
 
