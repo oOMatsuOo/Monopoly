@@ -14,6 +14,7 @@ ROUGE      = (139,  0,  0)
 JAUNE      = (255,215,  0)
 VERT       = (  0,128,  0)
 BLEU_FONCE = (  0,  0,139)
+NOIR       = (  0,  0,  0)
 
 
 bonus_malus = "Bonus ou Malus"
@@ -31,15 +32,17 @@ def main():
     try:
         conn = sqlite3.connect('cases.db')
         cursor = conn.cursor()
-        cursor.execute( """ CREATE TABLE IF NOT EXISTS cases (
-                                        id integer PRIMARY KEY,
-                                        name text NOT NULL,
-                                        type text NOT NULL,
-                                        color text NOT NULL,
-                                        cost integer,
-                                        rent integer,
-                                        owner text NOT NULL
-                                    ); """)
+        cursor.execute( """ 
+        CREATE TABLE IF NOT EXISTS cases (
+            id integer PRIMARY KEY,
+            name text NOT NULL,
+            type text NOT NULL,
+            color text NOT NULL,
+            cost integer,
+            rent integer,
+            owner text NOT NULL
+        ) 
+        """)
         conn.commit()
     except sqlite3.OperationalError:
         print('Erreur la table existe déjà')
@@ -54,27 +57,22 @@ def db_donnees():
     conn = sqlite3.connect("cases.db")
     c = conn.cursor()
 
-    cases = []
-    cases_append((0, "case_depart", bonus_malus, bonus, 20, jeux))
-    cases_append((2, "case_chance_1", bonus_malus, bonus,  0, jeux))
-    cases_append((4, "case_taxe_inverse", bonus_malus, bonus,  5, jeux))
-    cases_append((7, "case_chance_2", bonus_malus, bonus,  0, jeux))
-    cases_append((17, "case_chance_3", bonus_malus, bonus,  0, jeux))
-    cases_append((22, "case_chance_4", bonus_malus, bonus,  0, jeux))
-    cases_append((33, "case_chance_5", bonus_malus, bonus,  0, jeux))
-    cases_append((36, "case_chance_6", bonus_malus, bonus,  0, jeux))
-    cases_append((34, "case_taxe_luxe",    bonus_malus, malus, 30, jeux))
+    cases = [(0, "case_depart", bonus_malus, bonus, 20, jeux),(2, "case_chance_1", bonus_malus, bonus,  0, jeux),(4, "case_taxe_inverse", bonus_malus, bonus,  5, jeux),(7, "case_chance_2", bonus_malus, bonus,  0, jeux),(17, "case_chance_3", bonus_malus, bonus,  0, jeux),(22, "case_chance_4", bonus_malus, bonus,  0, jeux)]
+    """
+    cases_append((33, "case_chance_5", bonus_malus, bonus,  0, jeux)
+    cases_append((36, "case_chance_6", bonus_malus, bonus,  0, jeux)
+    cases_append((34, "case_taxe_luxe",    bonus_malus, malus, 30, jeux)
 
-    cases_append((1, "case_brune_1", batiment, BRUN, 5, 2, banquier))
-    cases_append((3, "case_brune_2", batiment, BRUN, 5, 3, banquier))
+    cases_append((1, "case_brune_1", batiment, BRUN, 5, 2, banquier)
+    cases_append((3, "case_brune_2", batiment, BRUN, 5, 3, banquier)
 
-    cases_append((6, "case_bleue_1", batiment, BLEU_CLAIR, 8, 4, banquier))
-    cases_append((8, "case_bleue_2", batiment, BLEU_CLAIR, 8, 4, banquier))
-    cases_append((9, "case_bleue_3", batiment, BLEU_CLAIR, 9, 5, banquier))
+    cases_append((6, "case_bleue_1", batiment, BLEU_CLAIR, 8, 4, banquier)
+    cases_append((8, "case_bleue_2", batiment, BLEU_CLAIR, 8, 4, banquier)
+    cases_append((9, "case_bleue_3", batiment, BLEU_CLAIR, 9, 5, banquier)
 
-    cases_append((11, "case_mauve_1", batiment, MAUVE, 12, 7, banquier))
-    cases_append((13, "case_mauve_2", batiment, MAUVE, 12, 7, banquier)) 
-    cases_append((14, "case_mauve_3", batiment, MAUVE, 13, 8, banquier))
+    cases_append((11, "case_mauve_1", batiment, MAUVE, 12, 7, banquier)
+    cases_append((13, "case_mauve_2", batiment, MAUVE, 12, 7, banquier) 
+    cases_append((14, "case_mauve_3", batiment, MAUVE, 13, 8, banquier)
 
     cases_append((16, "case_orange_1", batiment, ORANGE, 17, 12, banquier))
     cases_append((18, "case_orange_2", batiment, ORANGE, 17, 12, banquier))
@@ -103,10 +101,11 @@ def db_donnees():
     cases_append((12, "case_intercom_1", batiment, intercom, 25, banquier))
     cases_append((28, "case_intercom_2", batiment, intercom, 25, banquier))
 
-    c.executemany(""" 
-            INSERT INTO users(id, name, type, color, cost, rent, owner)
-            VALUES (?, ?, ?, ?, ?, ?)""",cases)
-
+    """
+    c.executemany(" INSERT INTO cases (?, ?, ?, ?, ?, ?)",cases)
+    for row in c.execute("SELECT * FROM cases"):
+        print(row)
+    """
 
 
 #Cases spéciales 
@@ -178,3 +177,4 @@ case_35 = ["case_transport_4", batiment, transport, 20, banquier]
 
 case_12 = ["case_intercom_1", batiment, intercom, 25, banquier]
 case_28 = ["case_intercom_2", batiment, intercom, 25, banquier]
+"""

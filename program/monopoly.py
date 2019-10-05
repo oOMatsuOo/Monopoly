@@ -1,6 +1,7 @@
-from cases import *
+from cases_db import *
 from card import *
 import random as rdm
+import sqlite3
 
 des = [1,2,3,4,5,6]
 
@@ -8,9 +9,6 @@ position = 0
 reponse = "oui"
 jeux = True
 quitter = False 
-
-if __name__ == '__main__':
-    main()
 
 def lancer_des():
     
@@ -43,12 +41,19 @@ def deplacement(deplacement):
 
     return(position)
 
-def calcul_case(position_deplacement):
+"""def calcul_case(position_deplacement):
 
-    #nom_case, type_case, couleur, cout_achat, loyer, proprietaire = "case_" + str(position_deplacement)
+    conn = sqlite3.connect('cases.db')
+    c = conn.cursor()
+    c.execute("SELECT id, name, type, color, cost, rent, owner FROM cases")
 
-    case_actuelle = list("case_" + str(position_deplacement))
-    print(case_actuelle)
+    case_emplacement = c.fetchone()
+
+    id_case, nom_case, type_case, couleur, cout_achat, loyer, proprietaire = case_emplacement
+
+    c.close()
+
+    return(case_emplacement)"""
 
 ## Jeux
 
@@ -71,7 +76,7 @@ while( not quitter ):
                 deplacement(total)
                 print("Votre nouvelle position : ")
                 print(position)
-                calcul_case(position)
+                #print(calcul_case(position))
 
             elif(reponse == "non"):
 
@@ -87,5 +92,3 @@ while( not quitter ):
 
     else :
         print("Je n'ai pas compris votre réponse.\n")
-
-db.close()
