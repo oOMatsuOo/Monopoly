@@ -41,9 +41,21 @@ def deplacement(deplacement):
 
     return(position)
 
-"""def calcul_case(position_deplacement):
+def calcul_case(position_deplacement):
 
     conn = sqlite3.connect('cases.db')
+    c = conn.cursor()
+
+    for row in c.execute("SELECT * FROM cases"):
+        position, nom, type_case, couleur, loyer, prix, propriétaire =  row
+
+        if(row[position] == position_deplacement):
+            case = row
+            print(row)
+        print()
+    
+
+    """conn = sqlite3.connect('cases.db')
     c = conn.cursor()
     c.execute("SELECT id, name, type, color, cost, rent, owner FROM cases")
 
