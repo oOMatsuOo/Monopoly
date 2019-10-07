@@ -46,26 +46,19 @@ def calcul_case(position_deplacement):
     conn = sqlite3.connect('cases.db')
     c = conn.cursor()
 
-    for row in c.execute("SELECT * FROM cases"):
-        position, nom, type_case, couleur, loyer, prix, propriétaire =  row
+    t = str(position_deplacement)
 
-        if(row[position] == position_deplacement):
-            case = row
-            print(row)
-        print()
+    print(t)
+
+    c.execute('SELECT * FROM cases WHERE id_case = ? ', '22')
+    case = c.fetchone()
+
+    id_case, name, type_case, color, cost, rent, owner = case
+
+    print(name)
+
+    return(case[0])
     
-
-    """conn = sqlite3.connect('cases.db')
-    c = conn.cursor()
-    c.execute("SELECT id, name, type, color, cost, rent, owner FROM cases")
-
-    case_emplacement = c.fetchone()
-
-    id_case, nom_case, type_case, couleur, cout_achat, loyer, proprietaire = case_emplacement
-
-    c.close()
-
-    return(case_emplacement)"""
 
 ## Jeux
 
@@ -73,7 +66,7 @@ while( not quitter ):
 
     reponse_menu = input("Voulez-vous jouer ?\n")   # -> Menu, option : Jeux
 
-    if(reponse_menu == "oui"):
+    if(reponse_menu == "oui" or reponse == "o"):
 
         jeux = True #Initialitation des variables , pour commencer à jouer
         position = 0
@@ -82,23 +75,26 @@ while( not quitter ):
 
             reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
 
-            if(reponse == "oui"):
+            if(reponse == "oui" or reponse == 'o' ):
 
                 double, total, premier_de, deuxieme_de = (lancer_des())
                 deplacement(total)
-                print("Votre nouvelle position : ")
-                print(position)
-                #print(calcul_case(position))
+                print("Votre nouvelle position : ", position )
+                print(calcul_case(position))
 
-            elif(reponse == "non"):
-
+            elif(reponse == "non" or reponse == 'n'):
                 print("Au revoir.")
                 jeux = False
+
+            elif(reponse == 'exit' or reponse == 'e'):
+                print("Au revoir.")
+                jeux = False
+                quitter = True
 
             else:
                 print("Je n'ai pas compris votre réponse.\n")
 
-    elif(reponse_menu == "non"):
+    elif(reponse_menu == "non" or reponse == 'n'):
         print("Au revoir.")
         quitter = True
 

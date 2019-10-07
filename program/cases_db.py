@@ -10,15 +10,15 @@ VERT       = (  0,128,  0)
 BLEU_FONCE = (  0,  0,139)
 NOIR       = (  0,  0,  0)
 
-bonus_malus = "Bonus ou Malus"
-case_depart = "Case départ"
-bonus = "Bonus"
-malus = "Malus"
-jeux = "Jeux"
-batiment = "Batiment"
-banquier = "Banquier"
-transport = "Transport"
-intercom = "Intercom"
+bonus_malus = 'Bonus ou Malus'
+case_depart = 'Case départ'
+bonus = 'Bonus'
+malus = 'Malus'
+jeux = 'Jeux'
+batiment = 'Batiment'
+banquier = 'Banquier'
+transport = 'Transport'
+intercom = 'Intercom'
 
 BRUN       = 'brun'
 BLEU_CLAIR = 'bleu clair'
@@ -36,56 +36,55 @@ conn = sqlite3.connect('cases.db')
 c = conn.cursor()
 c.execute( """ 
         CREATE TABLE IF NOT EXISTS cases (
-            id integer,
+            id_case text NOT NULL,
             name text NOT NULL,
             type text NOT NULL,
             color test NOT NULL,
-            cost integer,
-            rent integer,
+            cost real,
+            rent real,
             owner text NOT NULL
         ) 
         """)
 
-cases = [(0, case_depart, bonus_malus, 'noir', 0, 20, jeux),
-            (2, "case_chance_1", bonus_malus, 'noir', 0,  0, jeux),
-            (4, "case_taxe_inverse", bonus_malus, 'noir', 0,  5, jeux),
-            (7, "case_chance_2", bonus_malus, 'noir', 0,  0, jeux),
-            (17, "case_chance_3", bonus_malus, 'noir', 0,  0, jeux),
-            (22, "case_chance_4", bonus_malus, 'noir', 0,  0, jeux),
-            (33, "case_chance_5", bonus_malus, 'noir', 0,  0, jeux),
-            (36, "case_chance_6", bonus_malus, 'noir', 0,  0, jeux),
-            (34, "case_taxe_luxe", bonus_malus, 'noir', 0, 30, jeux),
-            (1, "case_brune_1", batiment, BRUN, 5, 2, banquier),
-            (3, "case_brune_2", batiment, BRUN, 5, 3, banquier),
-            (6, "case_bleue_1", batiment, BLEU_CLAIR, 8, 4, banquier),
-            (8, "case_bleue_2", batiment, BLEU_CLAIR, 8, 4, banquier),
-            (9, "case_bleue_3", batiment, BLEU_CLAIR, 9, 5, banquier),
-            (11, "case_mauve_1", batiment, MAUVE, 12, 7, banquier),
-            (13, "case_mauve_2", batiment, MAUVE, 12, 7, banquier),
-            (14, "case_mauve_3", batiment, MAUVE, 13, 8, banquier),
-            (16, "case_orange_1", batiment, ORANGE, 17, 12, banquier),
-            (18, "case_orange_2", batiment, ORANGE, 17, 12, banquier),
-            (19, "case_orange_3", batiment, ORANGE, 19, 14, banquier),
-            (21, "case_rouge_1", batiment, ROUGE, 23, 18, banquier),
-            (23, "case_rouge_2", batiment, ROUGE, 23, 18, banquier),
-            (24, "case_rouge_3", batiment, ROUGE, 26, 20, banquier),
-            (26, "case_jaune_1", batiment, JAUNE, 30, 24, banquier),
-            (27, "case_jaune_2", batiment, JAUNE, 30, 24, banquier),
-            (29, "case_jaune_3", batiment, JAUNE, 35, 29, banquier),
-            (31, "case_verte_1", batiment, JAUNE, 40, 35, banquier),
-            (32, "case_verte_2", batiment, JAUNE, 40, 35, banquier),
-            (34, "case_verte_3", batiment, JAUNE, 45, 37, banquier),
-            (36, "case_bleue_1", batiment, JAUNE, 50, 40, banquier),
-            (39, "case_bleue_2", batiment, JAUNE, 55, 45, banquier),
-            (5, "case_transport_1", batiment, transport, 20, 10, banquier),
-            (15, "case_transport_2", batiment, transport, 20, 10, banquier),
-            (25, "case_transport_3", batiment, transport, 20, 10, banquier),
-            (35, "case_transport_4", batiment, transport, 20, 10, banquier),    
-            (12, "case_intercom_1", batiment, intercom, 25, 10, banquier),
-            (28, "case_intercom_2", batiment, intercom, 25, 10, banquier)]
+cases = [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux),
+            (2, 'case chance 1', bonus_malus, 'noir', 0,  0, jeux),
+            (4, 'case taxe inverse', bonus_malus, 'noir', 0,  5, jeux),
+            (7, 'case chance 2', bonus_malus, 'noir', 0,  0, jeux),
+            (17, 'case chance 3', bonus_malus, 'noir', 0,  0, jeux),
+            ('22', 'case chance 4', bonus_malus, 'noir', 0,  0, jeux),
+            (33, 'case chance 5', bonus_malus, 'noir', 0,  0, jeux),
+            (36, 'case chance 6', bonus_malus, 'noir', 0,  0, jeux),
+            (34, 'case taxe luxe', bonus_malus, 'noir', 0, 30, jeux),
+            (1, 'case brune 1', batiment, BRUN, 5, 2, banquier),
+            (3, 'case brune 2', batiment, BRUN, 5, 3, banquier),
+            (6, 'case bleue 1', batiment, BLEU_CLAIR, 8, 4, banquier),
+            (8, 'case bleue 2', batiment, BLEU_CLAIR, 8, 4, banquier),
+            (9, 'case bleue 3', batiment, BLEU_CLAIR, 9, 5, banquier),
+            (11, 'case mauve 1', batiment, MAUVE, 12, 7, banquier),
+            (13, 'case mauve 2', batiment, MAUVE, 12, 7, banquier),
+            (14, 'case mauve 3', batiment, MAUVE, 13, 8, banquier),
+            (16, 'case orange 1', batiment, ORANGE, 17, 12, banquier),
+            (18, 'case orange 2', batiment, ORANGE, 17, 12, banquier),
+            (19, 'case orange 3', batiment, ORANGE, 19, 14, banquier),
+            (21, 'case rouge 1', batiment, ROUGE, 23, 18, banquier),
+            (23, 'case rouge 2', batiment, ROUGE, 23, 18, banquier),
+            (24, 'case rouge 3', batiment, ROUGE, 26, 20, banquier),
+            (26, 'case jaune 1', batiment, JAUNE, 30, 24, banquier),
+            (27, 'case jaune 2', batiment, JAUNE, 30, 24, banquier),
+            (29, 'case jaune 3', batiment, JAUNE, 35, 29, banquier),
+            (31, 'case verte 1', batiment, JAUNE, 40, 35, banquier),
+            (32, 'case verte 2', batiment, JAUNE, 40, 35, banquier),
+            (34, 'case verte 3', batiment, JAUNE, 45, 37, banquier),
+            (36, 'case bleue 1', batiment, JAUNE, 50, 40, banquier),
+            (39, 'case bleue 2', batiment, JAUNE, 55, 45, banquier),
+            (5, 'case transport 1', batiment, transport, 20, 10, banquier),
+            (15, 'case transport 2', batiment, transport, 20, 10, banquier),
+            (25, 'case transport 3', batiment, transport, 20, 10, banquier),
+            (35, 'case transport 4', batiment, transport, 20, 10, banquier),    
+            (12, 'case intercom 1', batiment, intercom, 25, 10, banquier),
+            (28, 'case intercom 2', batiment, intercom, 25, 10, banquier)]
 
 
-c.executemany(" INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?)", cases)
+c.executemany(' INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?)', cases)
 
-for row in c.execute("SELECT * FROM cases"):
-    print(row)
+conn.commit()
