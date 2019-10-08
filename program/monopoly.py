@@ -8,7 +8,17 @@ des = [1,2,3,4,5,6]
 position = 0
 reponse = "oui"
 jeux = True
-quitter = False 
+quitter = False
+
+def player(nom):
+    return{
+        'argent' : 2000,
+        'position' : 0,
+        'possesion' : 0,
+        'nom' : nom
+    }
+
+
 
 def lancer_des():
     
@@ -25,40 +35,48 @@ def lancer_des():
 
     return(double, total, premier_de, deuxieme_de)
 
-def deplacement(deplacement):
-
-    global position
+def deplacement(deplacement, positionPlayer):
 
     cases_max = nombre_case
 
-    cases_deplacement = position + deplacement
+    cases_deplacement = positionPlayer + deplacement
 
     if (cases_deplacement > cases_max):
         cases_deplacement = cases_deplacement - cases_max
-        position = cases_deplacement
+        positionFinal = cases_deplacement
     else:
-        position = cases_deplacement
+        positionFinal = cases_deplacement
 
-    return(position)
+    return(positionFinal)
 
 def calcul_case(position_deplacement):
 
     conn = sqlite3.connect('cases.db')
     c = conn.cursor()
 
-    t = str(position_deplacement)
+    #t = str(position_deplacement)
+    t = (position_deplacement,)
 
-    print(t)
-
-    c.execute('SELECT * FROM cases WHERE id_case = ? ', '22')
+    c.execute('SELECT * FROM cases WHERE id_case = ? ', t)
     case = c.fetchone()
 
     id_case, name, type_case, color, cost, rent, owner = case
 
-    print(name)
+    return(case)
 
-    return(case[0])
-    
+
+def modifierProprietaire(position, joueur):
+    conn = sqlite3.connect('cases.db')
+    c = conn.cursor()
+
+    c.execute("""   UPDATE cases 
+                        SET owner = ?
+                    WHERE id_case = ?""", (joueur, position) )
+        
+def achatCase(proprio, money)
+
+
+
 
 ## Jeux
 
@@ -66,12 +84,17 @@ while( not quitter ):
 
     reponse_menu = input("Voulez-vous jouer ?\n")   # -> Menu, option : Jeux
 
-    if(reponse_menu == "oui" or reponse == "o"):
-
+    if(reponse_menu == "oui" or reponse == 'o'):
+        
         jeux = True #Initialitation des variables , pour commencer à jouer
-        position = 0
 
         while(jeux):
+
+            """nombreJoueur = input("Combien y a t-il de joueurs ?")  # Nombre de joueurs
+            for
+            nomJoueur = input("Quel est votre nom ?\n")
+            joueur1 = player(nomJoueur)
+            position = 0"""
 
             reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
 
@@ -79,8 +102,17 @@ while( not quitter ):
 
                 double, total, premier_de, deuxieme_de = (lancer_des())
                 deplacement(total)
+
                 print("Votre nouvelle position : ", position )
-                print(calcul_case(position))
+                caseActuelle = calcul_case(position)
+                id_case, name, type_case, color, cost, rent, owner = caseActuelle
+
+                print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
+
+                reponse_achat = input("Voulez-vous acheter la case ?\n")
+
+                if reponse_achat == "oui":
+                    modifierProprietaire(position, joueur1)
 
             elif(reponse == "non" or reponse == 'n'):
                 print("Au revoir.")

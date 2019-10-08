@@ -19,6 +19,9 @@ batiment = 'Batiment'
 banquier = 'Banquier'
 transport = 'Transport'
 intercom = 'Intercom'
+prison = 'Prison'
+parking = 'Parking'
+aller_prison = 'Aller en prison'
 
 BRUN       = 'brun'
 BLEU_CLAIR = 'bleu clair'
@@ -51,38 +54,52 @@ cases = [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux),
             (4, 'case taxe inverse', bonus_malus, 'noir', 0,  5, jeux),
             (7, 'case chance 2', bonus_malus, 'noir', 0,  0, jeux),
             (17, 'case chance 3', bonus_malus, 'noir', 0,  0, jeux),
-            ('22', 'case chance 4', bonus_malus, 'noir', 0,  0, jeux),
+            (22, 'case chance 4', bonus_malus, 'noir', 0,  0, jeux),
             (33, 'case chance 5', bonus_malus, 'noir', 0,  0, jeux),
             (36, 'case chance 6', bonus_malus, 'noir', 0,  0, jeux),
             (34, 'case taxe luxe', bonus_malus, 'noir', 0, 30, jeux),
+
             (1, 'case brune 1', batiment, BRUN, 5, 2, banquier),
             (3, 'case brune 2', batiment, BRUN, 5, 3, banquier),
+
             (6, 'case bleue 1', batiment, BLEU_CLAIR, 8, 4, banquier),
             (8, 'case bleue 2', batiment, BLEU_CLAIR, 8, 4, banquier),
             (9, 'case bleue 3', batiment, BLEU_CLAIR, 9, 5, banquier),
+
             (11, 'case mauve 1', batiment, MAUVE, 12, 7, banquier),
             (13, 'case mauve 2', batiment, MAUVE, 12, 7, banquier),
             (14, 'case mauve 3', batiment, MAUVE, 13, 8, banquier),
+
             (16, 'case orange 1', batiment, ORANGE, 17, 12, banquier),
             (18, 'case orange 2', batiment, ORANGE, 17, 12, banquier),
             (19, 'case orange 3', batiment, ORANGE, 19, 14, banquier),
+
             (21, 'case rouge 1', batiment, ROUGE, 23, 18, banquier),
             (23, 'case rouge 2', batiment, ROUGE, 23, 18, banquier),
             (24, 'case rouge 3', batiment, ROUGE, 26, 20, banquier),
+
             (26, 'case jaune 1', batiment, JAUNE, 30, 24, banquier),
             (27, 'case jaune 2', batiment, JAUNE, 30, 24, banquier),
             (29, 'case jaune 3', batiment, JAUNE, 35, 29, banquier),
-            (31, 'case verte 1', batiment, JAUNE, 40, 35, banquier),
-            (32, 'case verte 2', batiment, JAUNE, 40, 35, banquier),
-            (34, 'case verte 3', batiment, JAUNE, 45, 37, banquier),
-            (36, 'case bleue 1', batiment, JAUNE, 50, 40, banquier),
-            (39, 'case bleue 2', batiment, JAUNE, 55, 45, banquier),
+
+            (31, 'case verte 1', batiment, VERT, 40, 35, banquier),
+            (32, 'case verte 2', batiment, VERT, 40, 35, banquier),
+            (34, 'case verte 3', batiment, VERT, 45, 37, banquier),
+
+            (36, 'case bleue 1', batiment, BLEU_FONCE, 50, 40, banquier),
+            (39, 'case bleue 2', batiment, BLEU_FONCE, 55, 45, banquier),
+
             (5, 'case transport 1', batiment, transport, 20, 10, banquier),
             (15, 'case transport 2', batiment, transport, 20, 10, banquier),
             (25, 'case transport 3', batiment, transport, 20, 10, banquier),
-            (35, 'case transport 4', batiment, transport, 20, 10, banquier),    
+            (35, 'case transport 4', batiment, transport, 20, 10, banquier), 
+
             (12, 'case intercom 1', batiment, intercom, 25, 10, banquier),
-            (28, 'case intercom 2', batiment, intercom, 25, 10, banquier)]
+            (28, 'case intercom 2', batiment, intercom, 25, 10, banquier),
+
+            (10, 'case Prison', batiment, prison, 0, 0, jeux),
+            (20, 'case Parking gratuit', batiment, parking, 0, 0, jeux),
+            (30, 'case Aller en Prison', batiment, aller_prison, 0, 0, jeux)]
 
 
 c.executemany(' INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?)', cases)
