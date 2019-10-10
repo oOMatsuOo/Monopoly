@@ -9,6 +9,7 @@ position = 0
 reponse = "oui"
 jeux = True
 quitter = False
+j = 1
 
 def player(nom):
     return{
@@ -54,13 +55,10 @@ def calcul_case(position_deplacement):
     conn = sqlite3.connect('cases.db')
     c = conn.cursor()
 
-    #t = str(position_deplacement)
     t = (position_deplacement,)
 
     c.execute('SELECT * FROM cases WHERE id_case = ? ', t)
     case = c.fetchone()
-
-    id_case, name, type_case, color, cost, rent, owner = case
 
     return(case)
 
@@ -73,7 +71,7 @@ def modifierProprietaire(position, joueur):
                         SET owner = ?
                     WHERE id_case = ?""", (joueur, position) )
         
-def achatCase(proprio, money)
+##def achatCase(proprio, money)
 
 
 
@@ -90,41 +88,52 @@ while( not quitter ):
 
         while(jeux):
 
-            """nombreJoueur = input("Combien y a t-il de joueurs ?")  # Nombre de joueurs
-            for
-            nomJoueur = input("Quel est votre nom ?\n")
-            joueur1 = player(nomJoueur)
-            position = 0"""
+            nombreJoueur = input("Combien y a t-il de joueurs ? (entre 1 et 4)\n")  # Nombre de joueurs
+            intNombreJoueur = int(nombreJoueur)
 
-            reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
+            if(intNombreJoueur <= 0):
+                print("Le nombre de joueur est incorrect.")
+            elif(intNombreJoueur <= 4):
 
-            if(reponse == "oui" or reponse == 'o' ):
+                while(j < intNombreJoueur):
+                    J = str(j)
+                    joueurX = [("Joueur numéro " + J), "Nom par défaut"]
+                    print(joueurX[0])
+                    joueurX[1] = player(input("Quel est votre nom ?\n"))
+                    j += 1
 
-                double, total, premier_de, deuxieme_de = (lancer_des())
-                deplacement(total)
+                reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
+    
+                if(reponse == "oui" or reponse == 'o' ):
+                
+                    double, total, premier_de, deuxieme_de = (lancer_des())
+                    deplacement(total)
+    
+                    print("Votre nouvelle position : ", position )
+                    caseActuelle = calcul_case(position)
+                    id_case, name, type_case, color, cost, rent, owner = caseActuelle
+    
+                    print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
+    
+                    reponse_achat = input("Voulez-vous acheter la case ?\n")
+    
+                    if reponse_achat == "oui":
+                        modifierProprietaire(position, joueur1)
+    
+                elif(reponse == "non" or reponse == 'n'):
+                    print("Au revoir.")
+                    jeux = False
 
-                print("Votre nouvelle position : ", position )
-                caseActuelle = calcul_case(position)
-                id_case, name, type_case, color, cost, rent, owner = caseActuelle
+                elif(reponse == 'exit' or reponse == 'e'):
+                    print("Au revoir.")
+                    jeux = False
+                    quitter = True
 
-                print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
-
-                reponse_achat = input("Voulez-vous acheter la case ?\n")
-
-                if reponse_achat == "oui":
-                    modifierProprietaire(position, joueur1)
-
-            elif(reponse == "non" or reponse == 'n'):
-                print("Au revoir.")
-                jeux = False
-
-            elif(reponse == 'exit' or reponse == 'e'):
-                print("Au revoir.")
-                jeux = False
-                quitter = True
-
+                else:
+                    print("Je n'ai pas compris votre réponse.\n")
+            
             else:
-                print("Je n'ai pas compris votre réponse.\n")
+                print("Le nombre de joueur est incorrect.")
 
     elif(reponse_menu == "non" or reponse == 'n'):
         print("Au revoir.")
