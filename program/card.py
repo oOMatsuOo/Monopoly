@@ -32,4 +32,4 @@ def chance ():
 
     card = message + str(credit) + fin_message
     
-    return (card)
+    return (card, credit)

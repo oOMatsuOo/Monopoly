@@ -10,33 +10,47 @@ reponse = "oui"
 jeux = True
 quitter = False
 j = 1
+joueurBanqueroute = 0
+bonusDepart = 200
 
-def player(nom):
-    return{
-        'argent' : 2000,
-        'position' : 0,
-        'possesion' : 0,
-        'nom' : nom
-    }
+def nomJoueur(nom, numeroJoueur):
+    conn = sqlite3.connect('player.db')
+    c = conn.cursor()
 
+    c.execute("""   UPDATE cases 
+                        SET name = ?
+                    WHERE numero = ?""", (nom, numeroJoueur))
+    print('Bonjour ' + nom)
 
+def joueurActuel(numero):
+    conn = sqlite3.connect('player.db')
+    c = conn.cursor()
 
-def lancer_des():
-    
-    double = False
+    t = (numero,)
+
+    c.execute('SELECT * FROM player WHERE id_case = ? ', t)
+    joueur = c.fetchone()
+
+    return(joueur)
+
+def lancer_des(numeroJoueur):
 
     premier_de = rdm.choice(des)
     deuxieme_de = rdm.choice(des)
     total = premier_de + deuxieme_de
 
     if premier_de == deuxieme_de:
-        double = True
-    else :
-        double = False
+        double = 1
+        conn = sqlite3.connect('player.db')
+        c = conn.cursor()
+
+        c.execute("""   UPDATE cases 
+                            SET double = ?
+                        WHERE numero = ?""", (double, numeroJoueur) )
 
     return(double, total, premier_de, deuxieme_de)
 
-def deplacement(deplacement, positionPlayer):
+def deplacement(deplacement, numeroJoueur, positionPlayer):
 
     cases_max = nombre_case
 
@@ -48,7 +62,13 @@ def deplacement(deplacement, positionPlayer):
     else:
         positionFinal = cases_deplacement
 
-    return(positionFinal)
+    conn = sqlite3.connect('player.db')
+    c = conn.cursor()
+
+    c.execute("""   UPDATE cases 
+                        SET position = ?
+                    WHERE numero = ?""", (positionFinal, numeroJoueur))
+    joueurActuel[3] = positionFinal
 
 def calcul_case(position_deplacement):
 
@@ -70,8 +90,24 @@ def modifierProprietaire(position, joueur):
     c.execute("""   UPDATE cases 
                         SET owner = ?
                     WHERE id_case = ?""", (joueur, position) )
+
+def modifArgent(joueur, dépense, argentJoueur):
+    argentJoueur = argentJoueur + dépense
+
+    conn = sqlite3.connect('player.db')
+    c = conn.cursor()
+
+    c.execute("""   UPDATE cases 
+                        SET argent = ?
+                    WHERE name = ?""", (argentJoueur, joueur) )
+    joueurActuel[2] = argentJoueur
         
-##def achatCase(proprio, money)
+def achatCase(proprio, money, case):
+    if proprio == 'Banquier':
+        reponse_achat = input("Voulez-vous acheter la case ?\n")
+        
+        if reponse_achat == 'oui':
+            modifierProprietairecccc
 
 
 
@@ -92,46 +128,78 @@ while( not quitter ):
             intNombreJoueur = int(nombreJoueur)
 
             if(intNombreJoueur <= 0):
+
                 print("Le nombre de joueur est incorrect.")
+
             elif(intNombreJoueur <= 4):
 
                 while(j < intNombreJoueur):
                     J = str(j)
-                    joueurX = [("Joueur numéro " + J), "Nom par défaut"]
-                    print(joueurX[0])
-                    joueurX[1] = player(input("Quel est votre nom ?\n"))
+
+                    nomJoueur(input("Quel est votre nom ?\n"),j)
+
                     j += 1
-
-                reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
-    
-                if(reponse == "oui" or reponse == 'o' ):
                 
-                    double, total, premier_de, deuxieme_de = (lancer_des())
-                    deplacement(total)
-    
-                    print("Votre nouvelle position : ", position )
-                    caseActuelle = calcul_case(position)
-                    id_case, name, type_case, color, cost, rent, owner = caseActuelle
-    
-                    print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
-    
-                    reponse_achat = input("Voulez-vous acheter la case ?\n")
-    
-                    if reponse_achat == "oui":
-                        modifierProprietaire(position, joueur1)
-    
-                elif(reponse == "non" or reponse == 'n'):
-                    print("Au revoir.")
-                    jeux = False
+                j = 1
 
-                elif(reponse == 'exit' or reponse == 'e'):
-                    print("Au revoir.")
-                    jeux = False
-                    quitter = True
+                while (joueurBanqueroute < (intNombreJoueur - 1)):
 
-                else:
-                    print("Je n'ai pas compris votre réponse.\n")
-            
+                    joueurActuel = joueurActuel(j)
+
+                    reponse = input("Voulez-vous lancer les dés ?\n") #Lancer les dés pour commencer à jouer
+    
+                    if(reponse == "oui" or reponse == 'o' ):
+                    
+                        double, total, premier_de, deuxieme_de = (lancer_des(j))
+                        print(premier_de + " + " + deuxieme_de + " = " + total)
+                        deplacement(total, j, joueurActuel[3])
+
+                        print("Votre nouvelle position : ", joueurActuel[3])
+
+                        caseActuelle = calcul_case(joueurActuel[3])
+
+                        id_case, name, type_case, color, cost, rent, owner = caseActuelle
+
+                        print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
+
+                        if caseActuelle[6] == 'Jeux':   #Effet case jeux
+                            if caseActuelle[1] == 'Case départ':
+                                modifArgent(joueurActuel[1], bonusDepart, joueurActuel[2])
+
+                            elif caseActuelle[1] == 'case chance':
+                                chance()
+
+                        elif caseActuelle[6] == 'Banquier' # Achat case
+                            if joueurActuel[2] >= caseActuelle[4]:
+
+                                reponse_achat = input("Voulez-vous acheter la case ?\n")
+
+                                if reponse_achat == 'oui':
+                                    modifierProprietaire(joueurActuel[3], joueurActuel[1])
+                                    modifArgent(joueurActuel[1], caseActuelle[4], joueurActuel[2])
+                        else:   #Payer joueur proprio
+
+
+
+                    elif(reponse == "non" or reponse == 'n'):
+                        print("Au revoir.")
+                        jeux = False
+
+                    elif(reponse == 'exit' or reponse == 'e'):
+                        print("Au revoir.")
+                        jeux = False
+                        quitter = True
+
+                    else:
+                        print("Je n'ai pas compris votre réponse.\n")
+                    
+                    if not double :
+                        double = False
+                        if j > 4:
+                            j += 1
+                        else:
+                            j = 1
+
             else:
                 print("Le nombre de joueur est incorrect.")
 

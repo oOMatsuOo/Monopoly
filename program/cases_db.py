@@ -37,6 +37,7 @@ nombre_case = 39
 
 conn = sqlite3.connect('cases.db')
 c = conn.cursor()
+
 c.execute( """ 
         CREATE TABLE IF NOT EXISTS cases (
             id_case text NOT NULL,
@@ -49,15 +50,15 @@ c.execute( """
         ) 
         """)
 
-cases = [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux),
-            (2, 'case chance 1', bonus_malus, 'noir', 0,  0, jeux),
-            (4, 'case taxe inverse', bonus_malus, 'noir', 0,  5, jeux),
-            (7, 'case chance 2', bonus_malus, 'noir', 0,  0, jeux),
-            (17, 'case chance 3', bonus_malus, 'noir', 0,  0, jeux),
-            (22, 'case chance 4', bonus_malus, 'noir', 0,  0, jeux),
-            (33, 'case chance 5', bonus_malus, 'noir', 0,  0, jeux),
-            (36, 'case chance 6', bonus_malus, 'noir', 0,  0, jeux),
-            (34, 'case taxe luxe', bonus_malus, 'noir', 0, 30, jeux),
+cases =     [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux),
+            (2, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (4, 'case taxe', bonus_malus, 'noir', 0,  5, jeux),
+            (7, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (17, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (22, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (33, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (36, 'case chance', bonus_malus, 'noir', 0,  0, jeux),
+            (34, 'case taxe', bonus_malus, 'noir', 0, -30, jeux),
 
             (1, 'case brune 1', batiment, BRUN, 5, 2, banquier),
             (3, 'case brune 2', batiment, BRUN, 5, 3, banquier),
@@ -105,3 +106,27 @@ cases = [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux),
 c.executemany(' INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?)', cases)
 
 conn.commit()
+
+
+
+conn = sqlite3.connect('player.db')
+c = conn.cursor()
+
+c.execute( """ 
+        CREATE TABLE IF NOT EXISTS player (
+            numero real,
+            name TEXT NOT NULL,
+            argent real,
+            position real,
+            double real
+        ) 
+        """)
+
+joueur = [(1, 'Emilie', 200, 0, 0),
+            (2, 'Amandine', 200, 0, 0),
+            (3, 'Noémie', 200, 0, 0),
+            (4, 'Nicolas', 200, 0, 0)]
+
+c.executemany('INSERT INTO player VALUES (?, ?, ?, ?)', joueur)
+
+con.commit()
