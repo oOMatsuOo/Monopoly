@@ -9,7 +9,7 @@ position = 0
 reponse = "oui"
 jeux = True
 quitter = False
-j = 1
+j = 0
 joueurBanqueroute = 0
 bonusDepart = 60
 
@@ -29,7 +29,7 @@ def joueurActuel(numero):
 
     t = (numero,)
 
-    c.execute('SELECT * FROM player WHERE id_case = ? ', t)
+    c.execute('SELECT * FROM player WHERE numero = ? ', t)
     joueur = c.fetchone()
 
     return(joueur)
@@ -39,6 +39,7 @@ def lancer_des(numeroJoueur):
     premier_de = rdm.choice(des)
     deuxieme_de = rdm.choice(des)
     total = premier_de + deuxieme_de
+    double = 0
 
     if premier_de == deuxieme_de:
         double = 1
@@ -71,7 +72,6 @@ def deplacement(deplacement, numeroJoueur, positionPlayer):
                         SET position = ?
                     WHERE numero = ?""", (positionFinal, numeroJoueur))
     conn.commit()
-    joueurActuel[3] = positionFinal
 
 def calcul_case(position_deplacement):
 
@@ -191,12 +191,9 @@ def donsAJoueurs(joueur, montant):
         else:
             i += 1
 
-def donsdeJoueurs(joueur, montant):
-
-
 ## Jeux
 
-while not quitter:
+while(not quitter):
 
     reponse_menu = input("Voulez-vous jouer ?\n")   # -> Menu, option : Jeux
 
@@ -209,11 +206,11 @@ while not quitter:
             nombreJoueur = input("Combien y a t-il de joueurs ? (entre 1 et 4)\n")  # Nombre de joueurs
             intNombreJoueur = int(nombreJoueur)
 
-            if(intNombreJoueur <= 0):
+            if(intNombreJoueur < 1):
 
                 print("Le nombre de joueur est incorrect.")
 
-            elif(intNombreJoueur <= 4):
+            elif(intNombreJoueur < 5):
 
                 while(j < intNombreJoueur):
                     J = str(j)
@@ -224,7 +221,7 @@ while not quitter:
                 
                 j = 1
 
-                while (joueurBanqueroute < (intNombreJoueur - 1)):
+                while (joueurBanqueroute < (intNombreJoueur)):
 
                     joueurActuel = joueurActuel(j)
 
@@ -233,7 +230,7 @@ while not quitter:
                     if(reponse == "oui" or reponse == 'o' ):
                     
                         double, total, premier_de, deuxieme_de = (lancer_des(j))
-                        print(premier_de + " + " + deuxieme_de + " = " + total)
+                        print(str(premier_de) + " + " + str(deuxieme_de) + " = " + str(total))
 
                         if joueurActuel[5] :
                             if double:
@@ -247,8 +244,6 @@ while not quitter:
                             print("Votre nouvelle position : ", joueurActuel[3])
 
                             caseActuelle = calcul_case(joueurActuel[3])
-
-                            id_case, name, type_case, color, cost, rent, owner = caseActuelle
 
                             print("La case sur laquelle vous vous trouvez est celle-ci : " + caseActuelle[1])
 
@@ -285,9 +280,9 @@ while not quitter:
                                     modifArgent(j, caseActuelle[5], joueurActuel[2])
 
                                 elif caseActuelle[1] == 'case Aller à la bibliothèque': #Effet case aller à la bibli
-                                    allerBibli[j]
+                                    allerBibli(j)
                             elif caseActuelle[6] == 'Banquier': #Effet case classique
-                                if joueurActuel[2] >= caseActuelle[4]
+                                if joueurActuel[2] >= caseActuelle[4]: #Si le joueur à l'argent pour acheter la case
 
                                     reponseAchat = input("Voulez-vous achetez cette case ? \n")
 
@@ -300,7 +295,7 @@ while not quitter:
                                     modifArgent(j, caseActuelle[5], joueurActuel[2])
                                     proprio = joueurActuel[caseActuelle[7]]
                                     modifArgent(caseActuelle[7], caseActuelle[5], proprio[2])
-                                else :
+                                #else :
                                     #Banqueroute
                             
                             #Construire maison
@@ -312,6 +307,8 @@ while not quitter:
                             #Hypothèque case
 
                             #Dé-hypothèquer case
+
+                            #si double -> rejouer
 
                     elif(reponse == "non" or reponse == 'n'):
                         print("Au revoir.")

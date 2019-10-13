@@ -53,7 +53,7 @@ c.execute( """
 
 cases =     [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux, 0),
             (2, 'case chance', bonus_malus, 'noir', 0,  0, jeux, 0),
-            (4, 'case taxe', bonus_malus, 'noir', 0,  5, jeux),
+            (4, 'case taxe', bonus_malus, 'noir', 0,  5, jeux, 0),
             (7, 'case chance', bonus_malus, 'noir', 0,  0, jeux, 0),
             (17, 'case chance', bonus_malus, 'noir', 0,  0, jeux, 0),
             (22, 'case chance', bonus_malus, 'noir', 0,  0, jeux, 0),
@@ -104,7 +104,7 @@ cases =     [(0, 'case départ', bonus_malus, 'noir', 0, 20, jeux, 0),
             (30, 'case Aller à la bibliothèque', batiment, allerBibliothèque, 0, 0, jeux, 0)]
 
 
-c.executemany(' INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?)', cases)
+c.executemany(' INSERT INTO cases VALUES (?, ?, ?, ?, ?, ?, ?, ?)', cases)
 
 conn.commit()
 
@@ -120,15 +120,16 @@ c.execute( """
             argent real,
             position real,
             bibliotheque real,
-            carteSortieBibli real
+            carteSortieBibli real,
+            double real
         ) 
         """)
 
-joueur = [(1, 'Emilie', 200, 0, 0),
-            (2, 'Amandine', 200, 0, 0),
-            (3, 'Noémie', 200, 0, 0),
-            (4, 'Nicolas', 200, 0, 0)]
+joueur = [(1, 'Emilie', 200, 0, 0, 0, 0),
+            (2, 'Amandine', 200, 0, 0, 0, 0),
+            (3, 'Noémie', 200, 0, 0, 0, 0),
+            (4, 'Nicolas', 200, 0, 0, 0, 0)]
 
-c.executemany('INSERT INTO player VALUES (?, ?, ?, ?)', joueur)
+c.executemany('INSERT INTO player VALUES (?, ?, ?, ?, ?, ?, ?)', joueur)
 
 conn.commit()
